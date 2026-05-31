@@ -52,8 +52,8 @@ indeed/
 │   ├── テンプレート（マーケティング）.xlsx
 │   ├── テンプレート（動画編集）.xlsx
 │   └── テンプレート（出版）.xlsx
-├── iRup/      ┐ 会社ごとの成果物
-├── UPBUILD/   │   drafts/        … 確認用 md（YYYYMMDD.md）
+├── iRup/      ┐ 会社ごとの成果物（md ドラフトは作らず xlsx を直接生成）
+├── UPBUILD/   │
 ├── Xedge/     ┘   <会社>_YYYYMMDD.xlsx … Indeed へアップロードする最終ファイル
 ├── archive/                       旧・会社別テンプレート（参照用に保管）
 └── .claude/
