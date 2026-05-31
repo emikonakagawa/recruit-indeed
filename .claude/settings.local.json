@@ -3,7 +3,11 @@
     "allow": [
       "Bash(python3 -c ' *)",
       "Bash(python3)",
-      "Bash(python3 /tmp/build_Xedge_20260524.py)"
-    ]
+      "Bash(python3 /tmp/build_Xedge_20260524.py)",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_click"
+    ],
+    "defaultMode": "auto"
   }
 }
