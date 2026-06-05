@@ -35,7 +35,7 @@
 | 全体俯瞰・地図（このファイル） | `.claude/CLAUDE.md` |
 | ワークフロー（ステップ 0〜6）+ チェックリスト | `.claude/skills/draft-jobs/SKILL.md` |
 | 列の分類・入力規則・全社共通の全固定ルール | `.claude/列定義.md` |
-| 本文スタイル（AT/AU/AV）+ 本文中の社名統一 | `.claude/本文スタイル.md` |
+| 本文スタイル（AT/AU/AV）+ 本文中の社名表記（各社の自社名） | `.claude/本文スタイル.md` |
 | エンジニア C 列固定書式・〇〇一覧・技術スタック早見表 | `.claude/エンジニア専門領域.md` |
 | 職種別「何を伝えるか」（テーマ・素材） | `.claude/briefs/<職種>.md`（全社共通） |
 | 会社固有値・勤務地候補・訴求素材 | `.claude/companies/<会社>/設定.md` |
@@ -56,13 +56,18 @@ indeed/
 ├── UPBUILD/   │
 ├── Xedge/     ┘   <会社>_YYYYMMDD.xlsx … Indeed へアップロードする最終ファイル
 ├── archive/                       旧・会社別テンプレート（参照用に保管）
+├── 分析レポート/                   分析スキルの出力（日本語タイトル＋日付。例: 非掲載求人分析_Xedge_20260605.md）
 └── .claude/
     ├── CLAUDE.md                  このファイル
     ├── 列定義.md                   全列 A〜BR の分類・入力規則（SSoT）
-    ├── 本文スタイル.md              AT/AU/AV の構造・文体・◆見出し・社名統一（SSoT）
+    ├── 本文スタイル.md              AT/AU/AV の構造・文体・◆見出し・社名表記（各社の自社名）（SSoT）
     ├── エンジニア専門領域.md         エンジニア C 列固定書式・〇〇一覧・技術スタック早見表（SSoT）
     ├── briefs/                     職種別の生成ブリーフ（5 種・全社共通）
-    ├── skills/draft-jobs/SKILL.md  共通スキル本体（ワークフロー SSoT）
+    ├── skills/
+    │   ├── draft-jobs/SKILL.md       求人作成スキル本体（ワークフロー SSoT）
+    │   ├── analyze-unlisted/SKILL.md 非掲載求人の理由分析スキル（Playwright でブラウザ操作）
+    │   └── analyze-performance/SKILL.md 掲載求人のパフォーマンス分析スキル（表示/クリック/応募、Playwright）
+    ├── commands/upload-indeed.md   Indeed 一括アップロード手順
     └── companies/                  会社別設定（固定値・運用ルール・訴求素材）
         ├── iRup/設定.md
         ├── UPBUILD/設定.md
@@ -75,11 +80,17 @@ indeed/
 | --- | --- | --- | --- |
 | iRup | エンジニア | 件数＝エンジニア求人の本数 | 東京（池袋/品川/渋谷/新宿ハブ）・愛知（名古屋） |
 | UPBUILD | エンジニア | 件数＝エンジニア求人の本数 | 東京・愛知（名古屋） |
-| Xedge | 5 職種（Webデザイン/マーケティング/動画編集/出版/エンジニア） | **1 セット＝5 職種各 1 件**。件数＝セット数（2 セット＝5 職種×2＝10 件） | 東京・愛知（名古屋） |
+| Xedge | 4 職種（Webデザイン/マーケティング/動画編集/出版） | **1 セット＝4 職種各 1 件**。件数＝セット数（2 セット＝4 職種×2＝8 件） | 東京・愛知（名古屋） |
 
 ## 作業の入口
 
 求人作成は **`draft-jobs` スキル**（または `/求人作成` コマンド）で開始します。スキルが最初に「会社」と「件数」を尋ね、`companies/<会社>/設定.md`・該当職種の共通ブリーフ・職種テンプレートを読み込んで進めます。**ワークフローの全手順は [`skills/draft-jobs/SKILL.md`](./skills/draft-jobs/SKILL.md) を参照**してください。
+
+主なスキル／コマンド:
+- **求人作成**: `draft-jobs` スキル → [`skills/draft-jobs/SKILL.md`](./skills/draft-jobs/SKILL.md)
+- **一括アップロード**: `/upload-indeed <会社>` → [`commands/upload-indeed.md`](./commands/upload-indeed.md)
+- **非掲載理由の分析**: `analyze-unlisted` スキル（Playwright で Indeed 管理画面を操作し、「非掲載」求人の確認事項＝理由を取得・分析）→ [`skills/analyze-unlisted/SKILL.md`](./skills/analyze-unlisted/SKILL.md)
+- **掲載求人のパフォーマンス分析**: `analyze-performance` スキル（表示回数・クリック数・応募数を取得し CTR=タイトル/CVR=内容を評価、ドキュメント改善プロンプトも出力）→ [`skills/analyze-performance/SKILL.md`](./skills/analyze-performance/SKILL.md)
 
 ## 注意事項
 
@@ -88,4 +99,4 @@ indeed/
 - 成果物 xlsx は `<会社>/<会社>_YYYYMMDD.xlsx` に保存する。
 - やり取りは **日本語**で行う。
 - iRup の会社固有値（社名・連絡先・画像 ID 等）は未確定のため、`companies/iRup/設定.md` に **TODO** として枠だけ用意してある。確定し次第埋めること。
-- 詳細ルール（給与の固定値・勤務形態・AD / BE・BF・BG の許容値・C 列スタイル・本文中の社名統一など）は重複定義しない。すべて上記「ドキュメント地図」の SSoT を参照すること。
+- 詳細ルール（給与の固定値・勤務形態・AD / BE・BF・BG の許容値・C 列スタイル・本文中の社名表記（各社の自社名）など）は重複定義しない。すべて上記「ドキュメント地図」の SSoT を参照すること。
