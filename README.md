@@ -29,6 +29,8 @@ Indeed に掲載する求人情報を xlsx 形式で作成・アップロード�
 
 ## セットアップ
 
+> 初めてクローンする人は、詳しい手順をまとめた [SETUP.md](SETUP.md) を参照してください。
+
 ### 1. Claude Code
 
 [Claude Code](https://claude.com/claude-code)（CLI またはデスクトップアプリ）でこのフォルダを開きます。
