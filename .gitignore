@@ -3,3 +3,7 @@
 .playwright-mcp
 .DS_Store
 upload_logs
+# Playwright 作業用スナップショット（ルート直下の一時ファイル）
+/*.yml
+/*.png
+分析レポート/_tmp_*
